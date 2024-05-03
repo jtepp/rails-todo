@@ -1,1 +1,48 @@
 <h1>Home</h1>
+
+<button id="new-list-button">New List</button>
+
+<div id="lists-container-wrapper">
+    <div id="lists-container-content">
+
+    </div>
+    <%= form_with model: @new_list, url: new_list_path,  html: { id: "new-list-form", class: "hide" } do |form| %>
+        <%= form.text_field :label, id: "new-list-input" %>
+    <% end %> 
+</div>
+
+
+
+
+<script>
+    const newListForm = document.querySelector("#new-list-form")
+    const newListInput = document.querySelector("#new-list-input")
+    
+    document.querySelector("#new-list-button").addEventListener('click', () => {
+        newListForm.classList.remove('hide')
+        newListInput.focus()
+    })
+
+    newListInput.addEventListener('blur', () => { // hide it when clicking away
+        newListForm.classList.add('hide')
+    })
+
+    newListInput.addEventListener('keydown', (e) => { // hide it when pressing escape
+        if (e.key === 'Escape')
+        {
+            e.preventDefault()
+            e.target.value = ''
+            e.target.blur()
+        }
+        else if (e.key === "Return") 
+        {
+            // submit a new list
+            e.preventDefault()
+            newListForm.submit()
+
+            // <% %>
+        }
+    }) 
+
+
+</script>
