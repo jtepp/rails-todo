@@ -1,10 +1,22 @@
+<%= link_to "< Home", root_path%>
 <div id="list-page-header">
     <h1><%= @list.title %></h1>
     <%= button_tag '+',  onclick: "\
-            document.querySelector(`#list-#{@list.id}-new-task-form`).classList.toggle('hide');\
-            document.querySelector(`#list-#{@list.id}-new-task-form input[name='label']`).focus();
+        document.querySelector(`#list-#{@list.id}-new-task-form`).classList.toggle('hide');\
+        document.querySelector(`#list-#{@list.id}-new-task-form input[name='label']`).focus();
     " %>
     <%= button_to "x", list_path(@list.id), method: :delete, data: {turbo_confirm: "Confirm delete list: #{@list.title}"}%>
+    <%= button_tag 'Toggle Show Completed',  onclick: "\
+        document.querySelector('.completed-tasks-container').classList.toggle('hide');\
+        sessionStorage.setItem('show_completed', !document.querySelector('.completed-tasks-container').classList.contains('hide'))
+    "
+    %>
 </div>
 
 <%= render partial: "list_form", locals: {list: @list} %>
+
+<script>
+    if (sessionStorage.getItem('show_completed') == 'true') {
+        document.querySelector('.completed-tasks-container').classList.remove('hide')
+    }
+</script>

@@ -61,7 +61,7 @@
     if (sessionStorage.getItem('show_completed') == 'true')
     {
         document.querySelectorAll(".completed-tasks-container").forEach(el => {
-            el.classList.toggle('hide')
+            el.classList.remove('hide')
         });
     }
 
