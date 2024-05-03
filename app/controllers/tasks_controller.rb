@@ -18,6 +18,15 @@ class TasksController < ActionController::Base
         redirect_to root_path
     end
 
+    def delete
+        @task = Task.find(params[:id])
+        unless @task.delete
+            puts "ERROR DELETING TASK"
+            puts @task.errors.full_messages
+        end
+        redirect_to root_path
+    end
+
     private
     def task_params
         params.require(:task).permit(:label, :status, :list_id, :notes, :due)

@@ -14,27 +14,36 @@
             document.querySelector(`#list-#{list.id}-new-task-form`).classList.toggle('hide');\
             document.querySelector(`#list-#{list.id}-new-task-form input[name='label']`).focus();
             " %>
-            <%= button_to "X", list_path(list.id), method: :delete, data: {turbo_confirm: "Confirm delete list: #{list.title}"}%>
+            <%= button_to "x", list_path(list.id), method: :delete, data: {turbo_confirm: "Confirm delete list: #{list.title}"}%>
         </div>
         <div class="list-tasks-container">
  
-        <!-- Completed -->
-            <% list.tasks.select{|t| t.status === 1 }.each do |task| %>
-                <%= form_with model: task, url: update_task_path(task), method: :patch, html: { class: "completed-tasks-container hide" } do |form| %>
-                    <%= form.hidden_field :list_id, value: list.id %>
-                    <%= form.check_box :status, class: "task-status", onchange: "this.form.submit()" %>
-                    <%= form.text_field :label %>
-                <% end%>
-            <% end %>
+            <!-- Completed -->
+            <div class="completed-tasks-container hide">
+                <% list.tasks.select{|t| t.status === 1 }.each do |task| %>
+                    <div class="task">
+                        <%= form_with model: task, url: update_task_path(task), method: :patch do |form| %>
+                            <%= form.hidden_field :list_id, value: list.id %>
+                            <%= form.check_box :status, class: "task-status", onchange: "this.form.submit()" %>
+                            <%= form.text_field :label %>
+                        <% end%>
+                        <%= button_to "x", delete_task_path(list.id), method: :delete, data: {turbo_confirm: "Confirm delete task: #{task.label}"}%>
+                    </div>
+                <% end %>
+            </div>
 
-        <!-- Incomplete -->
-            <% list.tasks.select{|t| t.status === 0 }.each do |task| %>
-                <%= form_with model: task, url: update_task_path(task), method: :patch do |form| %>
-                    <%= form.hidden_field :list_id, value: list.id %>
-                    <%= form.check_box :status, class: "task-status", onchange: "this.form.submit()" %>
-                    <%= form.text_field :label %>
-                <% end%>
-            <% end %>
+            <!-- Incomplete -->
+            <div class="incomplete-tasks-container">
+                <% list.tasks.select{|t| t.status === 0 }.each do |task| %>
+                    <div class="task">
+                        <%= form_with model: task, url: update_task_path(task), method: :patch do |form| %>
+                            <%= form.hidden_field :list_id, value: list.id %>
+                            <%= form.check_box :status, class: "task-status", onchange: "this.form.submit()" %>
+                            <%= form.text_field :label %>
+                        <% end%>
+                    </div>
+                <% end %>
+            </div>
 
             <%= form_with model: Task.new, url: new_task_path, html: {id: "list-#{list.id}-new-task-form", class: "new-task-form hide"} do |form| %>
                 <%= form.hidden_field :list_id, value: list.id %>
@@ -78,7 +87,18 @@
         document.querySelectorAll(".completed-tasks-container").forEach(el => {
             el.classList.toggle('hide')
         });
+
+        console.log(!document.querySelector(".completed-tasks-container").classList.contains('hide'))
+        sessionStorage.setItem('show_completed', !document.querySelector(".completed-tasks-container").classList.contains('hide'))
+        console.log(sessionStorage.getItem('show_completed'))
     })
+
+    if (sessionStorage.getItem('show_completed') == 'true')
+    {
+        document.querySelectorAll(".completed-tasks-container").forEach(el => {
+            el.classList.toggle('hide')
+        });
+    }
 
 
 </script>

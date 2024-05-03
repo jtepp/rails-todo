@@ -37,3 +37,14 @@
    align-items: center;
    gap: 20px;
  }
+
+ .task {
+   display: flex;
+   gap: 10px;
+ }
+
+ .list-tasks-container {
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+ }
