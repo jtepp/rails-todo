@@ -59,3 +59,11 @@
    padding: 10px;
    background-color: #ccc;
  }
+
+ #list-page-header {
+   display: flex;
+   flex-direction: row;
+   gap: 20px;
+   justify-content: flex-start;
+   align-items: center;
+ }

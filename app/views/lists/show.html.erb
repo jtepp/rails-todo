@@ -1,1 +1,10 @@
-<h1><%= @list.title %></h1>
+<div id="list-page-header">
+    <h1><%= @list.title %></h1>
+    <%= button_tag '+',  onclick: "\
+            document.querySelector(`#list-#{@list.id}-new-task-form`).classList.toggle('hide');\
+            document.querySelector(`#list-#{@list.id}-new-task-form input[name='label']`).focus();
+    " %>
+    <%= button_to "x", list_path(@list.id), method: :delete, data: {turbo_confirm: "Confirm delete list: #{@list.title}"}%>
+</div>
+
+<%= render partial: "list_form", locals: {list: @list} %>
