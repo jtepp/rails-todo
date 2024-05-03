@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
  
-  post "/new_list", to: "lists#create"
+  post "/lists/new", to: "lists#create", as: :new_list
+  get "/lists/:id", to: "lists#show", as: :list
   root "lists#index"
 end

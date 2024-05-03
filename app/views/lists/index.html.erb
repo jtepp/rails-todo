@@ -4,10 +4,12 @@
 
 <div id="lists-container-wrapper">
     <div id="lists-container-content">
-
+        <% @lists.each do |list| %>
+            <%= link_to list.title, list_path(list.id) %>
+        <% end %>
     </div>
     <%= form_with model: @new_list, url: new_list_path,  html: { id: "new-list-form", class: "hide" } do |form| %>
-        <%= form.text_field :label, id: "new-list-input" %>
+        <%= form.text_field :title, id: "new-list-input", placeholder: "List title..." %>
     <% end %> 
 </div>
 
@@ -15,19 +17,16 @@
 
 
 <script>
-    const newListForm = document.querySelector("#new-list-form")
-    const newListInput = document.querySelector("#new-list-input")
-    
     document.querySelector("#new-list-button").addEventListener('click', () => {
-        newListForm.classList.remove('hide')
-        newListInput.focus()
+        document.querySelector("#new-list-form").classList.remove('hide')
+        document.querySelector("#new-list-input").focus()
     })
 
-    newListInput.addEventListener('blur', () => { // hide it when clicking away
-        newListForm.classList.add('hide')
+    document.querySelector("#new-list-input").addEventListener('blur', () => { // hide it when clicking away
+        document.querySelector("#new-list-form").classList.add('hide')
     })
 
-    newListInput.addEventListener('keydown', (e) => { // hide it when pressing escape
+    document.querySelector("#new-list-input").addEventListener('keydown', (e) => { // hide it when pressing escape
         if (e.key === 'Escape')
         {
             e.preventDefault()
@@ -38,7 +37,7 @@
         {
             // submit a new list
             e.preventDefault()
-            newListForm.submit()
+            document.querySelector("#new-list-form").submit()
 
             // <% %>
         }
