@@ -3,7 +3,6 @@ class ListsController < ActionController::Base
     before_action :set_lists, only: [:delete, :create, :index]
 
     def index
-        @new_list = List.new
     end
 
     def show
