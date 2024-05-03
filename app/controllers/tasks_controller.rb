@@ -1,17 +1,18 @@
 class TasksController < ActionController::Base
     def create
-        puts "TEST HERE"
-
         @task = Task.new(task_params)
 
-        puts @task
+        if @task.save
+            redirect_to root_path
+        else
+            render :index, status: :unprocessable_entity
+        end
 
-        # if @task.save
-        #     redirect_to root_path
-        # else
-        #     render :index, status: :unprocessable_entity
-        # end
+    end
 
+    def update
+        @task = Task.find(params[:id])
+        @task.update(task_params)
     end
 
     private

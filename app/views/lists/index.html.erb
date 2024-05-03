@@ -15,8 +15,16 @@
         </div>
         <div class="list-tasks-container">
 
+            <% list.tasks.select{|t| t.status === 0 }.each do |task| %>
+                <%= form_with model: task, url: update_task_path(task), method: :patch do |form| %>
+                    <%= form.hidden_field :list_id, value: list.id %>
+                    <%= form.check_box :status, html: {class: "task-status"} %>
+                    <%= form.text_field :label %>
+                <% end%>
+            <% end %>
+
             <%= form_with model: Task.new, url: new_task_path, html: {id: "list-#{list.id}-new-task-form", class: "new-task-form hide"} do |form| %>
-                <%= form.hidden_field :list_id, value: list.id.to_i %>
+                <%= form.hidden_field :list_id, value: list.id %>
                 <%= form.check_box :status, disabled: true, html: {class: "task-status"} %>
                 <%= form.text_field :label, placeholder: "New task..." %>
                 <%# other fields not in form: notes, due %>

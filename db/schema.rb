@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_03_194043) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_03_195814) do
   create_table "lists", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
@@ -21,7 +21,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_03_194043) do
     t.integer "list_id", null: false
     t.string "label"
     t.text "notes"
-    t.integer "status"
+    t.integer "status", default: 0
     t.date "due"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
