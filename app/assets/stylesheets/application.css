@@ -48,3 +48,14 @@
    flex-direction: column;
    gap: 10px;
  }
+
+ .incomplete-tasks-container, .completed-tasks-container:not(.hide) {
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+ }
+
+ .completed-tasks-container {
+   padding: 10px;
+   background-color: #ccc;
+ }

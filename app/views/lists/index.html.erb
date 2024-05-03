@@ -16,43 +16,8 @@
             " %>
             <%= button_to "x", list_path(list.id), method: :delete, data: {turbo_confirm: "Confirm delete list: #{list.title}"}%>
         </div>
-        <div class="list-tasks-container">
- 
-            <!-- Completed -->
-            <div class="completed-tasks-container hide">
-                <% list.tasks.select{|t| t.status === 1 }.each do |task| %>
-                    <div class="task">
-                        <%= form_with model: task, url: update_task_path(task), method: :patch do |form| %>
-                            <%= form.hidden_field :list_id, value: list.id %>
-                            <%= form.check_box :status, class: "task-status", onchange: "this.form.submit()" %>
-                            <%= form.text_field :label %>
-                        <% end%>
-                        <%= button_to "x", delete_task_path(list.id), method: :delete, data: {turbo_confirm: "Confirm delete task: #{task.label}"}%>
-                    </div>
-                <% end %>
-            </div>
-
-            <!-- Incomplete -->
-            <div class="incomplete-tasks-container">
-                <% list.tasks.select{|t| t.status === 0 }.each do |task| %>
-                    <div class="task">
-                        <%= form_with model: task, url: update_task_path(task), method: :patch do |form| %>
-                            <%= form.hidden_field :list_id, value: list.id %>
-                            <%= form.check_box :status, class: "task-status", onchange: "this.form.submit()" %>
-                            <%= form.text_field :label %>
-                        <% end%>
-                    </div>
-                <% end %>
-            </div>
-
-            <%= form_with model: Task.new, url: new_task_path, html: {id: "list-#{list.id}-new-task-form", class: "new-task-form hide"} do |form| %>
-                <%= form.hidden_field :list_id, value: list.id %>
-                <%= form.check_box :status, disabled: true, html: {class: "task-status"} %>
-                <%= form.text_field :label, placeholder: "New task..." %>
-                <%# other fields not in form: notes, due %>
-            <% end %>
-
-        </div>
+        
+        <%= render partial: "list_form", locals: {list: list} %>
 
         <% end %>
     </div>
