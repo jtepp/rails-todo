@@ -20,6 +20,15 @@ class ListsController < ActionController::Base
 
     end
 
+    def delete
+        @list = List.find(params[:id])
+        if @list.delete
+            redirect_to root_path
+        else
+            render :index, status: :unprocessable_entity
+        end
+    end
+
     private
     def list_params
         params.require(:list).permit(:title)

@@ -5,7 +5,10 @@
 <div id="lists-container-wrapper">
     <div id="lists-container-content">
         <% @lists.each do |list| %>
-            <%= link_to list.title, list_path(list.id) %>
+        <div class="list-header">
+            <%= link_to list.title, list_path(list.id), class: "list-link" %>
+            <%= button_to "X", list_path(list.id), method: :delete, data: {turbo_confirm: "Confirm delete list: #{list.title}"}%>
+        </div>
         <% end %>
     </div>
     <%= form_with model: @new_list, url: new_list_path,  html: { id: "new-list-form", class: "hide" } do |form| %>
@@ -18,12 +21,20 @@
 
 <script>
     document.querySelector("#new-list-button").addEventListener('click', () => {
-        document.querySelector("#new-list-form").classList.remove('hide')
-        document.querySelector("#new-list-input").focus()
-    })
+        const form = document.querySelector("#new-list-form")
+        form.classList.toggle('hide')
+        if (!form.classList.contains('hide'))
+            document.querySelector("#new-list-input").focus()
 
-    document.querySelector("#new-list-input").addEventListener('blur', () => { // hide it when clicking away
-        document.querySelector("#new-list-form").classList.add('hide')
+        // form.classList.remove('hide')
+        // if (form.classList.contains('hide')) {
+        //     console.log('focus')
+        //     document.querySelector("#new-list-form").classList.remove('hide')
+        //     document.querySelector("#new-list-input").focus()
+        // } else {
+        //     console.log('hide')
+        //     document.querySelector("#new-list-input").blur()
+        // }
     })
 
     document.querySelector("#new-list-input").addEventListener('keydown', (e) => { // hide it when pressing escape
@@ -32,6 +43,7 @@
             e.preventDefault()
             e.target.value = ''
             e.target.blur()
+            document.querySelector("#new-list-form").classList.add('hide')
         }
         else if (e.key === "Return") 
         {
