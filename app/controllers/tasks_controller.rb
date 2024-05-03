@@ -1,4 +1,5 @@
 class TasksController < ActionController::Base
+    
     def create
         @task = Task.new(task_params)
 
@@ -6,7 +7,7 @@ class TasksController < ActionController::Base
             puts "ERROR CREATING TASK"
             puts @task.errors.full_messages
         end
-        redirect_to root_path
+        redirect_back(fallback_location: root_path)
     end
 
     def update
@@ -15,7 +16,7 @@ class TasksController < ActionController::Base
             puts "ERROR UPDATING TASK"
             puts @task.errors.full_messages
         end
-        redirect_to root_path
+        redirect_back(fallback_location: root_path)
     end
 
     def delete
@@ -24,7 +25,7 @@ class TasksController < ActionController::Base
             puts "ERROR DELETING TASK"
             puts @task.errors.full_messages
         end
-        redirect_to root_path
+        redirect_back(fallback_location: root_path)
     end
 
     private
