@@ -7,12 +7,26 @@
         <% @lists.each do |list| %>
         <div class="list-header">
             <%= link_to list.title, list_path(list.id), class: "list-link" %>
+            <%= button_tag '+',  onclick: "\
+            document.querySelector(`#list-#{list.id}-new-task-form`).classList.toggle('hide');\
+            document.querySelector(`#list-#{list.id}-new-task-form input[name='label']`).focus();
+            " %>
             <%= button_to "X", list_path(list.id), method: :delete, data: {turbo_confirm: "Confirm delete list: #{list.title}"}%>
         </div>
+        <div class="list-tasks-container">
+
+            <%= form_with model: @new_task, url: new_task_path, html: {id: "list-#{list.id}-new-task-form", class: "new-task-form hide"} do |form| %>
+                <%= form.check_box :status, disabled: true, html: {class: "task-status"} %>
+                <%= form.text_field :label, placeholder: "New task..." %>
+                <%# other fields not in form: notes, due %>
+            <% end %>
+
+        </div>
+
         <% end %>
     </div>
     <%= form_with model: @new_list, url: new_list_path,  html: { id: "new-list-form", class: "hide" } do |form| %>
-        <%= form.text_field :title, id: "new-list-input", placeholder: "List title..." %>
+        <%= form.text_field :title, id: "new-list-input", placeholder: "New list..." %>
     <% end %> 
 </div>
 
@@ -26,15 +40,6 @@
         if (!form.classList.contains('hide'))
             document.querySelector("#new-list-input").focus()
 
-        // form.classList.remove('hide')
-        // if (form.classList.contains('hide')) {
-        //     console.log('focus')
-        //     document.querySelector("#new-list-form").classList.remove('hide')
-        //     document.querySelector("#new-list-input").focus()
-        // } else {
-        //     console.log('hide')
-        //     document.querySelector("#new-list-input").blur()
-        // }
     })
 
     document.querySelector("#new-list-input").addEventListener('keydown', (e) => { // hide it when pressing escape
