@@ -9,7 +9,7 @@
                             <%= form.check_box :status, class: "task-status", onchange: "this.form.submit()" %>
                             <%= form.text_field :label %>
                         <% end%>
-                        <%= button_to "x", delete_task_path(list.id), method: :delete, data: {turbo_confirm: "Confirm delete task: #{task.label}"}%>
+                        <%= button_to "x", delete_task_path(task.id), method: :delete, data: {turbo_confirm: "Confirm delete task: #{task.label}"}%>
                     </div>
                 <% end %>
                 <%= "No completed tasks" if list.tasks.select{|t| t.status === 1}.length < 1 %>
