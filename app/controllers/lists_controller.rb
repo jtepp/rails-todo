@@ -13,7 +13,7 @@ class ListsController < ActionController::Base
         @list = List.new(list_params)
 
         if @list.save
-            redirect_to @list
+            redirect_to root_path
         else
             render :index, status: :unprocessable_entity
         end
