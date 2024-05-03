@@ -1,3 +1,3 @@
 class Task < ApplicationRecord
-  belongs_to :list_id
+  belongs_to :list
 end
