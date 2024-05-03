@@ -2,22 +2,24 @@ class TasksController < ActionController::Base
     def create
         @task = Task.new(task_params)
 
-        if @task.save
-            redirect_to root_path
-        else
-            render :index, status: :unprocessable_entity
+        unless @task.save
+            puts "ERROR CREATING TASK"
+            puts @task.errors.full_messages
         end
-
+        redirect_to root_path
     end
 
     def update
         @task = Task.find(params[:id])
-        @task.update(task_params)
+        unless @task.update(task_params)
+            puts "ERROR UPDATING TASK"
+            puts @task.errors.full_messages
+        end
+        redirect_to root_path
     end
 
     private
     def task_params
         params.require(:task).permit(:label, :status, :list_id, :notes, :due)
     end
-
 end

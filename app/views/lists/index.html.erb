@@ -1,5 +1,8 @@
 <h1>Home</h1>
 
+
+<button id="show-completed-button">Toggle Show Completed</button>
+
 <button id="new-list-button">New List</button>
 
 <div id="lists-container-wrapper">
@@ -14,11 +17,21 @@
             <%= button_to "X", list_path(list.id), method: :delete, data: {turbo_confirm: "Confirm delete list: #{list.title}"}%>
         </div>
         <div class="list-tasks-container">
+ 
+        <!-- Completed -->
+            <% list.tasks.select{|t| t.status === 1 }.each do |task| %>
+                <%= form_with model: task, url: update_task_path(task), method: :patch, html: { class: "completed-tasks-container hide" } do |form| %>
+                    <%= form.hidden_field :list_id, value: list.id %>
+                    <%= form.check_box :status, class: "task-status", onchange: "this.form.submit()" %>
+                    <%= form.text_field :label %>
+                <% end%>
+            <% end %>
 
+        <!-- Incomplete -->
             <% list.tasks.select{|t| t.status === 0 }.each do |task| %>
                 <%= form_with model: task, url: update_task_path(task), method: :patch do |form| %>
                     <%= form.hidden_field :list_id, value: list.id %>
-                    <%= form.check_box :status, html: {class: "task-status"} %>
+                    <%= form.check_box :status, class: "task-status", onchange: "this.form.submit()" %>
                     <%= form.text_field :label %>
                 <% end%>
             <% end %>
@@ -60,6 +73,12 @@
             document.querySelector("#new-list-form").classList.add('hide')
         }
     }) 
+
+    document.querySelector("#show-completed-button").addEventListener('click', () => {
+        document.querySelectorAll(".completed-tasks-container").forEach(el => {
+            el.classList.toggle('hide')
+        });
+    })
 
 
 </script>
