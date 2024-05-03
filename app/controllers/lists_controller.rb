@@ -1,7 +1,8 @@
 class ListsController < ActionController::Base
     layout "application"
+    before_action :set_lists, only: [:delete, :create, :index]
+
     def index
-        @lists = List.all
         @new_list = List.new
     end
 
@@ -32,6 +33,10 @@ class ListsController < ActionController::Base
     private
     def list_params
         params.require(:list).permit(:title)
+    end
+
+    def set_lists
+        @lists = List.all
     end
 
 end
