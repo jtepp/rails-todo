@@ -3,29 +3,39 @@ class TasksController < ActionController::Base
     def create
         @task = Task.new(task_params)
 
-        unless @task.save
+        if @task.save
+            redirect_back(fallback_location: root_path)
+        else 
             puts "ERROR CREATING TASK"
             puts @task.errors.full_messages
+
+            redirect_back fallback_location: root_path, status: :unprocessable_entity
+            return
         end
-        redirect_back(fallback_location: root_path)
     end
 
     def update
         @task = Task.find(params[:id])
-        unless @task.update(task_params)
+        if @task.update(task_params)
+            redirect_back(fallback_location: root_path)
+        else
             puts "ERROR UPDATING TASK"
             puts @task.errors.full_messages
+
+            redirect_back fallback_location: root_path, status: :unprocessable_entity
         end
-        redirect_back(fallback_location: root_path)
     end
 
     def delete
         @task = Task.find(params[:id])
-        unless @task.delete
+        if @task.delete
+            redirect_back(fallback_location: root_path)
+        else
             puts "ERROR DELETING TASK"
             puts @task.errors.full_messages
+            
+            redirect_back fallback_location: root_path, status: :unprocessable_entity
         end
-        redirect_back(fallback_location: root_path)
     end
 
     private
