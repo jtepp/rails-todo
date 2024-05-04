@@ -8,17 +8,20 @@
 <div id="lists-container-wrapper">
     <div id="lists-container-content">
         <% @lists.each do |list| %>
-        <div class="list-header">
+        <details open>
+
+        <summary class="list-header">
             <%= link_to list.title, list_path(list.id), class: "list-link" %>
             <%= button_tag '+',  onclick: "\
             document.querySelector(`#list-#{list.id}-new-task-form`).classList.toggle('hide');\
             document.querySelector(`#list-#{list.id}-new-task-form input[name='task[label]']`).focus();
             " %>
             <%= button_to "x", list_path(list.id), method: :delete, data: {turbo_confirm: "Confirm delete list: #{list.title}"}%>
-        </div>
+
+        </summary>
         
         <%= render partial: "/lists/list_form", locals: {list: list} %>
-
+        </details>
         <% end %>
     </div>
     <%= form_with model: List.new, url: new_list_path,  html: { id: "new-list-form", class: "hide" } do |form| %>

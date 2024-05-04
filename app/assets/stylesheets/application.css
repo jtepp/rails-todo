@@ -71,3 +71,11 @@
    justify-content: flex-start;
    align-items: center;
  }
+
+ details>summary::before {
+   content: '▶';
+}
+
+details[open]>summary::before {
+   rotate: 90deg;
+}
