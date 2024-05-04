@@ -3,7 +3,7 @@
     <h1><%= @list.title %></h1>
     <%= button_tag '+',  onclick: "\
         document.querySelector(`#list-#{@list.id}-new-task-form`).classList.toggle('hide');\
-        document.querySelector(`#list-#{@list.id}-new-task-form input[name='label']`).focus();
+        document.querySelector(`#list-#{@list.id}-new-task-form input[name='task[label]']`).focus();
     " %>
     <%= button_to "x", list_path(@list.id), method: :delete, data: {turbo_confirm: "Confirm delete list: #{@list.title}"}%>
     <%= button_tag 'Toggle Show Completed',  onclick: "\
@@ -13,7 +13,7 @@
     %>
 </div>
 
-<%= render partial: "list_form", locals: {list: @list} %>
+<%= render partial: "/lists/list_form", locals: {list: @list} %>
 
 <script>
     if (sessionStorage.getItem('show_completed') == 'true') {

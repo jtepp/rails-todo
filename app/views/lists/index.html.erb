@@ -12,12 +12,12 @@
             <%= link_to list.title, list_path(list.id), class: "list-link" %>
             <%= button_tag '+',  onclick: "\
             document.querySelector(`#list-#{list.id}-new-task-form`).classList.toggle('hide');\
-            document.querySelector(`#list-#{list.id}-new-task-form input[name='label']`).focus();
+            document.querySelector(`#list-#{list.id}-new-task-form input[name='task[label]']`).focus();
             " %>
             <%= button_to "x", list_path(list.id), method: :delete, data: {turbo_confirm: "Confirm delete list: #{list.title}"}%>
         </div>
         
-        <%= render partial: "list_form", locals: {list: list} %>
+        <%= render partial: "/lists/list_form", locals: {list: list} %>
 
         <% end %>
     </div>
