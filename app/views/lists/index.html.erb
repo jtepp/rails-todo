@@ -38,15 +38,15 @@
 
     })
 
-    document.querySelector("#new-list-input").addEventListener('keydown', (e) => { // hide it when pressing escape
-        if (e.key === 'Escape')
-        {
-            e.preventDefault()
-            e.target.value = ''
-            e.target.blur()
-            document.querySelector("#new-list-form").classList.add('hide')
-        }
-    }) 
+    // document.querySelector("#new-list-input").addEventListener('keydown', (e) => { // hide it when pressing escape
+    //     if (e.key === 'Escape')
+    //     {
+    //         e.preventDefault()
+    //         e.target.value = ''
+    //         e.target.blur()
+    //         document.querySelector("#new-list-form").classList.add('hide')
+    //     }
+    // }) 
 
     document.querySelector("#show-completed-button").addEventListener('click', () => {
         document.querySelectorAll(".completed-tasks-container").forEach(el => {

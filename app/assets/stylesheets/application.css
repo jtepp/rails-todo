@@ -18,6 +18,10 @@
     display: none;
  }
 
+ .hide-next+* {
+   display: none;
+ }
+
  #lists-container-content {
    display: flex;
    flex-direction: column;

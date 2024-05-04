@@ -7,7 +7,10 @@
                         <%= form_with model: task, url: update_task_path(task), method: :patch do |form| %>
                             <%= form.hidden_field :list_id, value: list.id %>
                             <%= form.check_box :status, class: "task-status", onchange: "this.form.submit()" %>
-                            <%= form.text_field :label %>
+                            <span class="hide-next" onclick="this.classList.remove('hide-next'); this.classList.add('hide');this.nextElementSibling.focus()">
+                                    <%= task.label %>
+                                </span>
+                                <%= form.text_field :label, onblur: "this.previousElementSibling.classList.remove('hide');this.previousElementSibling.classList.add('hide-next')" %>
                         <% end%>
                         <%= button_to "x", delete_task_path(task.id), method: :delete, data: {turbo_confirm: "Confirm delete task: #{task.label}"}%>
                     </div>
@@ -22,7 +25,10 @@
                         <%= form_with model: task, url: update_task_path(task), method: :patch do |form| %>
                             <%= form.hidden_field :list_id, value: list.id %>
                             <%= form.check_box :status, class: "task-status", onchange: "this.form.submit()" %>
-                            <%= form.text_field :label %>
+                                <span class="hide-next" onclick="this.classList.remove('hide-next'); this.classList.add('hide');this.nextElementSibling.focus()">
+                                    <%= task.label %>
+                                </span>
+                                <%= form.text_field :label, onblur: "this.previousElementSibling.classList.remove('hide');this.previousElementSibling.classList.add('hide-next')" %>
                         <% end%>
                     </div>
                 <% end %>
